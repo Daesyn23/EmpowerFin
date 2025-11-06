@@ -1,0 +1,1142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EmpowerFin - Financial Well-Being for Working Students</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Space Grotesk', monospace;
+            background: #0a0a0a;
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        /* Scroll Animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .slide-in-left {
+            opacity: 0;
+            transform: translateX(-50px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+
+        .slide-in-left.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .slide-in-right {
+            opacity: 0;
+            transform: translateX(50px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+
+        .slide-in-right.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 1.5rem 4rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(10px);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.3rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+        }
+
+        .logo-icon {
+            width: 35px;
+            height: 35px;
+            color: #FFD700;
+            animation: rotate 4s linear infinite;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: #888;
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 500;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .nav-links a.active {
+            color: #FFD700;
+        }
+
+        .nav-links a.active::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: #FFD700;
+        }
+
+        .plus-btn {
+            width: 40px;
+            height: 40px;
+            border: 2px solid #FFD700;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .plus-btn:hover {
+            background: #FFD700;
+            transform: rotate(90deg);
+        }
+
+        .plus-btn::before,
+        .plus-btn::after {
+            content: '';
+            position: absolute;
+            background: #FFD700;
+            transition: all 0.3s ease;
+        }
+
+        .plus-btn::before {
+            width: 16px;
+            height: 2px;
+        }
+
+        .plus-btn::after {
+            width: 2px;
+            height: 16px;
+        }
+
+        .plus-btn:hover::before,
+        .plus-btn:hover::after {
+            background: #000;
+        }
+
+        /* Dropdown */
+        .dropdown {
+            position: relative;
+        }
+
+        .dropdown > a {
+            cursor: pointer;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: rgba(0, 0, 0, 0.95);
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            min-width: 250px;
+            margin-top: 0.5rem;
+            border-radius: 5px;
+            padding-top: 0.5rem;
+            z-index: 1001;
+        }
+
+        .dropdown:hover .dropdown-content,
+        .dropdown-content.show {
+            display: block;
+        }
+
+        .dropdown-content a {
+            display: block;
+            padding: 1rem 1.5rem;
+            color: #888;
+            font-size: 0.9rem;
+            border-bottom: 1px solid rgba(255, 215, 0, 0.1);
+            text-decoration: none;
+        }
+
+        .dropdown-content a:last-child {
+            border-bottom: none;
+        }
+
+        .dropdown-content a:hover {
+            background: rgba(255, 215, 0, 0.1);
+            color: #FFD700;
+        }
+
+        /* Sections */
+        section {
+            min-height: 100vh;
+            padding: 6rem 4rem 4rem;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Hero Section */
+        .hero-section {
+            flex-direction: column;
+            background: radial-gradient(ellipse at center, #1a1a1a 0%, #000 100%);
+        }
+
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: 
+                linear-gradient(rgba(255, 215, 0, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 215, 0, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            animation: gridMove 20s linear infinite;
+        }
+
+        @keyframes gridMove {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(50px, 50px); }
+        }
+
+        .hero-content {
+            max-width: 1400px;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: clamp(2.5rem, 7vw, 5.5rem);
+            font-weight: 900;
+            letter-spacing: 0.1em;
+            line-height: 1.2;
+            margin-bottom: 4rem;
+            background: linear-gradient(45deg, #FFD700, #FFA500, #FFD700);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: shine 3s linear infinite;
+        }
+
+        @keyframes shine {
+            to { background-position: 200% center; }
+        }
+
+        .hero-badge {
+            padding: 1rem 3rem;
+            background: transparent;
+            border: 2px solid #FFD700;
+            color: #FFD700;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1rem;
+            letter-spacing: 0.3em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            clip-path: polygon(20px 0, 100% 0, calc(100% - 20px) 100%, 0 100%);
+        }
+
+        .hero-badge:hover {
+            background: #FFD700;
+            color: #000;
+            transform: translateY(-3px);
+        }
+
+        /* Circular Image */
+        .circular-image {
+            position: relative;
+            width: 450px;
+            height: 450px;
+            flex-shrink: 0;
+        }
+
+        .circular-frame {
+            width: 100%;
+            height: 100%;
+            border: 15px solid #FFD700;
+            border-radius: 50%;
+            position: relative;
+            animation: pulseGlow 3s ease-in-out infinite;
+        }
+
+        @keyframes pulseGlow {
+            0%, 100% { box-shadow: 0 0 20px rgba(255, 215, 0, 0.3); }
+            50% { box-shadow: 0 0 40px rgba(255, 215, 0, 0.6); }
+        }
+
+        .circular-frame::before {
+            content: '';
+            position: absolute;
+            top: -20px;
+            left: -20px;
+            right: -20px;
+            bottom: -20px;
+            border: 3px solid rgba(255, 215, 0, 0.3);
+            border-radius: 50%;
+        }
+
+        .segment {
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            background: #0a0a0a;
+        }
+
+        .segment.top { top: -15px; left: 50%; transform: translateX(-50%); }
+        .segment.bottom { bottom: -15px; left: 50%; transform: translateX(-50%); }
+        .segment.left { left: -15px; top: 50%; transform: translateY(-50%); }
+        .segment.right { right: -15px; top: 50%; transform: translateY(-50%); }
+
+        .image-content {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            right: 15px;
+            bottom: 15px;
+            border-radius: 50%;
+            overflow: hidden;
+            background-size: cover;
+            background-position: center;
+        }
+
+        /* Content Grids */
+        .content-grid {
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            gap: 4rem;
+            align-items: center;
+            max-width: 1400px;
+            width: 100%;
+        }
+
+        .content-grid.reverse {
+            grid-template-columns: 1.2fr 1fr;
+        }
+
+        /* Yellow Banner */
+        .yellow-banner {
+            background: #FFD700;
+            color: #000;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            display: inline-block;
+            text-align: center;
+        }
+
+        .section-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 900;
+            letter-spacing: 0.05em;
+            color: #FFD700;
+            margin-bottom: 2rem;
+        }
+
+        /* Content Boxes */
+        .content-box {
+            background: rgba(0, 0, 0, 0.6);
+            border: 2px solid rgba(255, 215, 0, 0.3);
+            border-radius: 25px;
+            padding: 2rem;
+            margin: 1rem 0;
+        }
+
+        .content-box p {
+            font-size: 1rem;
+            line-height: 1.8;
+            color: #ccc;
+            letter-spacing: 0.05em;
+        }
+
+        /* Quote Box */
+        .quote-box {
+            background: rgba(0, 0, 0, 0.8);
+            border: 2px solid rgba(255, 215, 0, 0.2);
+            border-radius: 15px;
+            padding: 2rem;
+            text-align: center;
+            margin-top: 2rem;
+        }
+
+        .quote-box p {
+            font-size: 1rem;
+            font-style: italic;
+            line-height: 1.7;
+            color: #ccc;
+        }
+
+        .quote-box .author {
+            font-size: 0.9rem;
+            color: #FFD700;
+            margin-top: 1rem;
+        }
+
+        /* Side Title */
+        .side-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: clamp(2.5rem, 4vw, 3.5rem);
+            font-weight: 900;
+            letter-spacing: 0.05em;
+            color: #FFD700;
+            text-align: right;
+            line-height: 1.2;
+        }
+
+        /* Arrow Navigation */
+        .nav-arrow {
+            position: fixed;
+            bottom: 3rem;
+            right: 3rem;
+            width: 70px;
+            height: 70px;
+            background: #FFD700;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 999;
+        }
+
+        .nav-arrow:hover {
+            transform: scale(1.1);
+        }
+
+        .nav-arrow svg {
+            width: 30px;
+            height: 30px;
+            color: #000;
+        }
+
+        /* Footer */
+        .footer-section {
+            background: #000;
+            text-align: center;
+            padding: 3rem 2rem;
+            min-height: auto;
+        }
+
+        .footer-section h2 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 3rem;
+            color: #FFD700;
+            margin-bottom: 1rem;
+        }
+
+        .footer-links {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            max-width: 600px;
+            margin: 2rem auto;
+        }
+
+        .footer-links a {
+            color: #ccc;
+            text-decoration: underline;
+            font-size: 1rem;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: #FFD700;
+        }
+
+        .footer-section p {
+            color: #888;
+            margin: 0.5rem 0;
+            font-size: 0.95rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .content-grid,
+            .content-grid.reverse {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .circular-image {
+                width: 350px;
+                height: 350px;
+                margin: 0 auto;
+            }
+
+            nav {
+                padding: 1rem 2rem;
+            }
+
+            section {
+                padding: 5rem 2rem 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="logo">
+            <svg class="logo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+                <path d="M2 17l10 5 10-5M2 12l10 5 10-5"/>
+            </svg>
+            <span>EMPOWERFIN</span>
+        </div>
+        <div class="nav-links">
+            <a href="#hero" class="nav-link">Company</a>
+            <div class="dropdown">
+                <a>Features ▼</a>
+                <div class="dropdown-content">
+                    <a href="#purpose" class="nav-link">Website Purpose</a>
+                    <a href="#welcome" class="nav-link">Introduction</a>
+                    <a href="#understanding" class="nav-link">Understanding FWB</a>
+                    <a href="#literacy" class="nav-link">Financial Literacy</a>
+                    <a href="#stress" class="nav-link">Financial Stress</a>
+                    <a href="#income" class="nav-link">Improving Income</a>
+                    <a href="#pses" class="nav-link">Enhancing PSES</a>
+                    <a href="#behavior" class="nav-link">Financial Behavior</a>
+                </div>
+            </div>
+            <a href="#support" class="nav-link">About Us</a>
+            <div class="plus-btn"></div>
+        </div>
+    </nav>
+
+    <!-- Hero Landing -->
+    <section id="hero" class="hero-section">
+        <div class="hero-content">
+            <h1 class="hero-title">
+                EMPOWERFIN: STRENGTHENING<br>
+                FINANCIAL WELL-BEING OF<br>
+                WORKING STUDENTS
+            </h1>
+            <div class="hero-badge" onclick="document.getElementById('purpose').scrollIntoView({behavior: 'smooth'})">
+                THE FUTURE OF MONEY
+            </div>
+        </div>
+    </section>
+
+    <!-- Purpose -->
+    <section id="purpose">
+        <div class="content-grid">
+            <div class="circular-image fade-in">
+                <div class="circular-frame">
+                    <div class="segment top"></div>
+                    <div class="segment bottom"></div>
+                    <div class="segment left"></div>
+                    <div class="segment right"></div>
+                    <div class="image-content" style="background-image: url('image3.jpeg');"></div>
+                </div>
+            </div>
+            <div class="slide-in-right">
+                <h1 class="section-title">EMPOWERFIN: STRENGTHENING FINANCIAL WELL-BEING OF WORKING STUDENTS</h1>
+                <div class="yellow-banner">WEBSITE PURPOSE</div>
+                <p style="color: #ccc; line-height: 1.8; margin: 1.5rem 0;">
+                    THIS WEBSITE IS CREATED BY BSBA FINANCIAL MANAGEMENT STUDENTS FROM BATANGAS STATE UNIVERSITY – THE NATIONAL ENGINEERING UNIVERSITY (PB MAIN 1).
+                </p>
+                <p style="color: #ccc; line-height: 1.8; margin-bottom: 1rem;">
+                    IT AIMS TO EMPOWER WORKING STUDENTS BY PROVIDING TOOLS, STRATEGIES, AND MOTIVATIONAL RESOURCES TO ENHANCE THEIR PERCEIVED SOCIO-ECONOMIC STATUS (PSES) AND INCREASE MONTHLY INCOME – TWO OF THE LOWEST-SCORING ASPECTS OF FINANCIAL WELL-BEING BASED ON OUR STUDY.
+                </p>
+                <p style="color: #999; line-height: 1.8; font-style: italic;">
+                    THE CONTENTS COMBINE RESEARCH FINDINGS, REAL-LIFE EXAMPLES, AND MULTIMEDIA LEARNING TO MAKE FINANCIAL LITERACY PRACTICAL AND RELATABLE.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Welcome -->
+    <section id="welcome">
+        <div class="content-grid reverse">
+            <div class="slide-in-left">
+                <div class="yellow-banner">INTRODUCTION</div>
+                <div class="content-box" style="margin-top: 1.5rem;">
+                    <p style="margin-bottom: 1.5rem;">
+                        WELCOME TO EMPOWERFIN, A PLATFORM BUILT TO SUPPORT AND INSPIRE WORKING STUDENTS AT BATANGAS STATE UNIVERSITY – TNEU PB MAIN 1.
+                    </p>
+                    <p style="margin-bottom: 1.5rem;">
+                        OUR RESEARCH, "EFFECTS OF FINANCIAL LITERACY AND FINANCIAL STRESS ON FINANCIAL WELL-BEING WITH FINANCIAL BEHAVIOR AS MEDIATOR", REVEALED THAT MONTHLY INCOME AND PERCEIVED SOCIO-ECONOMIC STATUS SIGNIFICANTLY AFFECT FINANCIAL WELL-BEING.
+                    </p>
+                    <p style="font-style: italic;">
+                        THIS WEBSITE TRANSFORMS THOSE INSIGHTS INTO PRACTICAL TOOLS AND EDUCATIONAL MATERIALS.
+                    </p>
+                </div>
+                <div class="content-box" style="margin-top: 1.5rem;">
+                    <p style="font-style: italic; margin-bottom: 1rem; color: #FFD700;"><strong>MISSION STATEMENT</strong></p>
+                    <p>"TO UPLIFT THE FINANCIAL CAPACITY AND SELF-PERCEIVED STATUS OF WORKING STUDENTS THROUGH FINANCIAL EDUCATION, EMPOWERMENT, AND COMMUNITY ENGAGEMENT."</p>
+                </div>
+                <div class="content-box" style="margin-top: 1rem;">
+                    <p style="font-style: italic; margin-bottom: 1rem; color: #FFD700;"><strong>VISION</strong></p>
+                    <p>A FINANCIALLY LITERATE, CONFIDENT, AND RESILIENT BATSTATEU STUDENT COMMUNITY EQUIPPED WITH LIFE-LONG MONEY MANAGEMENT SKILLS.</p>
+                </div>
+            </div>
+            <div class="circular-image fade-in">
+                <div class="circular-frame">
+                    <div class="segment top"></div>
+                    <div class="segment bottom"></div>
+                    <div class="segment left"></div>
+                    <div class="segment right"></div>
+                    <div class="image-content" style="background-image: url('image4.jpeg');"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Understanding -->
+    <section id="understanding">
+        <div class="content-grid">
+            <div class="slide-in-left">
+                <div class="yellow-banner">WHAT IS FINANCIAL WELL-BEING?</div>
+                <div class="content-box" style="margin-top: 1.5rem;">
+                    <p style="margin-bottom: 0.5rem;">
+                        FINANCIAL WELL-BEING REFERS TO FEELING SECURE AND IN CONTROL OF YOUR MONEY – BEING ABLE TO MEET CURRENT AND FUTURE OBLIGATIONS COMFORTABLY.
+                    </p>
+                    <p style="font-size: 0.85rem; color: #888;">(SOURCE: CFPB, 2022)</p>
+                </div>
+                
+                <h3 style="font-family: 'Orbitron', sans-serif; color: #FFD700; font-size: 2rem; margin: 2rem 0 1rem;">KEY CONCEPTS</h3>
+                
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                    <div class="content-box fade-in">
+                        <h4 style="color: #FFD700; font-family: 'Orbitron', sans-serif; margin-bottom: 0.5rem;">FINANCIAL LITERACY</h4>
+                        <p style="font-size: 0.9rem;">UNDERSTANDING FINANCIAL TERMS, BUDGETING, SAVING, INVESTING.</p>
+                        <p style="font-size: 0.85rem; color: #888; margin-top: 0.5rem;">EXAMPLE: KNOWING HOW TO USE A BANK APP OR BUDGET WORKSHEET.</p>
+                    </div>
+                    <div class="content-box fade-in">
+                        <h4 style="color: #FFD700; font-family: 'Orbitron', sans-serif; margin-bottom: 0.5rem;">FINANCIAL BEHAVIOR</h4>
+                        <p style="font-size: 0.9rem;">DAY-TO-DAY HABITS THAT AFFECT FINANCES.</p>
+                        <p style="font-size: 0.85rem; color: #888; margin-top: 0.5rem;">EXAMPLE: TRACKING EXPENSES, SAVING REGULARLY.</p>
+                    </div>
+                    <div class="content-box fade-in">
+                        <h4 style="color: #FFD700; font-family: 'Orbitron', sans-serif; margin-bottom: 0.5rem;">FINANCIAL STRESS</h4>
+                        <p style="font-size: 0.9rem;">EMOTIONAL TENSION FROM MONEY-RELATED PROBLEMS.</p>
+                        <p style="font-size: 0.85rem; color: #888; margin-top: 0.5rem;">EXAMPLE: WORRYING ABOUT PAYING TUITION OR RENT.</p>
+                    </div>
+                    <div class="content-box fade-in">
+                        <h4 style="color: #FFD700; font-family: 'Orbitron', sans-serif; margin-bottom: 0.5rem;">FINANCIAL WELL-BEING</h4>
+                        <p style="font-size: 0.9rem;">LEVEL OF SATISFACTION AND CONFIDENCE IN YOUR FINANCIAL LIFE.</p>
+                        <p style="font-size: 0.85rem; color: #888; margin-top: 0.5rem;">EXAMPLE: BEING ABLE TO PAY BILLS AND STILL SAVE.</p>
+                    </div>
+                </div>
+
+                <div class="quote-box fade-in">
+                    <p>"FINANCIAL WELL-BEING IS NOT ABOUT HAVING MORE MONEY – IT'S ABOUT HAVING CONTROL OVER THE MONEY YOU HAVE."</p>
+                    <p class="author">— SHIM, BARBER & SERIDO, 2010</p>
+                </div>
+            </div>
+            
+            <div class="slide-in-right" style="display: flex; flex-direction: column; align-items: center; gap: 2rem;">
+                <div class="circular-image">
+                    <div class="circular-frame">
+                        <div class="segment top"></div>
+                        <div class="segment bottom"></div>
+                        <div class="segment left"></div>
+                        <div class="segment right"></div>
+                        <div class="image-content" style="background-image: url('image5.jpeg');"></div>
+                    </div>
+                </div>
+                <h2 class="side-title">UNDERSTANDING<br>FINANCIAL<br>WELL-BEING</h2>
+            </div>
+        </div>
+    </section>
+
+    <!-- Financial Literacy -->
+    <section id="literacy">
+        <div style="max-width: 1400px; width: 100%;">
+            <h1 class="section-title fade-in">IMPROVING FINANCIAL<br>LITERACY</h1>
+            
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-bottom: 2rem;">
+                <div>
+                    <div class="content-box fade-in">
+                        <h3 style="color: #FFD700; font-family: 'Orbitron', sans-serif; margin-bottom: 1rem; text-align: center;">WHAT IS FINANCIAL LITERACY?</h3>
+                        <p style="font-style: italic; text-align: center;">KNOWING HOW TO EARN, SAVE, SPEND, INVEST, AND BUDGET MONEY WISELY.</p>
+                    </div>
+                    
+                    <div class="yellow-banner fade-in" style="margin-top: 2rem; width: 100%;">WHY IT MATTERS</div>
+                    <div class="content-box fade-in">
+                        <ul style="list-style: none; padding: 0;">
+                            <li style="margin-bottom: 0.5rem;">• HELPS AVOID DEBT</li>
+                            <li style="margin-bottom: 0.5rem;">• BUILDS CONFIDENCE IN MONEY DECISIONS</li>
+                            <li style="margin-bottom: 0.5rem;">• SUPPORTS STUDENT LIFE & FUTURE CAREER</li>
+                            <li style="margin-bottom: 0.5rem;">• LOWERS MONEY-RELATED STRESS</li>
+                            <li>• LEADS TO BETTER FINANCIAL WELL-BEING</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="content-box fade-in" style="background: #FFD700; padding: 2rem;">
+                    <h3 style="color: #000; font-family: 'Orbitron', sans-serif; margin-bottom: 1.5rem; text-align: center;">KEY FINANCIAL SKILLS</h3>
+                    <table style="width: 100%; border-collapse: collapse;">
+                        <tr style="border-bottom: 2px solid #000;">
+                            <th style="padding: 1rem; text-align: left; color: #000; font-weight: 700;">SKILLS</th>
+                            <th style="padding: 1rem; text-align: left; color: #000; font-weight: 700;">MEANING</th>
+                        </tr>
+                        <tr style="border-bottom: 1px solid rgba(0,0,0,0.2);">
+                            <td style="padding: 1rem; color: #000; font-style: italic;">BUDGETING</td>
+                            <td style="padding: 1rem; color: #000;">PLANNING WHERE YOUR MONEY GOES</td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid rgba(0,0,0,0.2);">
+                            <td style="padding: 1rem; color: #000; font-style: italic;">RESPONSIBLE SPENDING</td>
+                            <td style="padding: 1rem; color: #000;">BUYING NEEDS FIRST BEFORE WANTS</td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid rgba(0,0,0,0.2);">
+                            <td style="padding: 1rem; color: #000; font-style: italic;">SAVING</td>
+                            <td style="padding: 1rem; color: #000;">KEEPING MONEY FOR EMERGENCIES & GOALS</td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid rgba(0,0,0,0.2);">
+                            <td style="padding: 1rem; color: #000; font-style: italic;">INVESTING BASICS</td>
+                            <td style="padding: 1rem; color: #000;">LEARNING HOW MONEY GROWS</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 1rem; color: #000; font-style: italic;">MONEY PLANNING</td>
+                            <td style="padding: 1rem; color: #000;">SETTING SHORT & LONG-TERM FINANCIAL GOALS</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
+                <div class="content-box fade-in">
+                    <h3 style="color: #FFD700; font-family: 'Orbitron', sans-serif; margin-bottom: 1rem;">SIMPLE DAILY HABITS</h3>
+                    <ul style="list-style: none; padding: 0;">
+                        <li style="margin-bottom: 0.5rem;">• TRACK EXPENSES (NOTEBOOK OR APP)</li>
+                        <li style="margin-bottom: 0.5rem;">• AVOID IMPULSE BUYING</li>
+                        <li style="margin-bottom: 0.5rem;">• USE CASH ENVELOPES OR CATEGORY BUDGETS</li>
+                        <li style="margin-bottom: 0.5rem;">• SET WEEKLY SAVING TARGETS</li>
+                        <li>• COMPARE PRICES BEFORE BUYING</li>
+                    </ul>
+                </div>
+
+                <div class="content-box fade-in">
+                    <h3 style="color: #FFD700; font-family: 'Orbitron', sans-serif; margin-bottom: 1rem;">QUICK STUDENT TIPS</h3>
+                    <ul style="list-style: none; padding: 0;">
+                        <li style="margin-bottom: 0.5rem;">• MAKE A SHOPPING LIST BEFORE BUYING</li>
+                        <li style="margin-bottom: 0.5rem;">• USE STUDENT DISCOUNTS & PROMOS</li>
+                        <li style="margin-bottom: 0.5rem;">• PACK LUNCH TO SCHOOL WHEN POSSIBLE</li>
+                        <li style="margin-bottom: 0.5rem;">• START SMALL INVESTING (₱50-₱100)</li>
+                        <li>• JOIN FINANCIAL WEBINARS & STUDENT ORGS</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="quote-box fade-in">
+                <p>"Small smart money habits today lead to a stronger future tomorrow."</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Financial Stress -->
+    <section id="stress">
+        <div style="max-width: 1400px; width: 100%;">
+            <div style="display: grid; grid-template-columns: 1fr auto 1fr; gap: 2rem; align-items: start;">
+                <div class="yellow-banner fade-in" style="padding: 2rem;">
+                    <h3 style="margin-bottom: 1rem; font-size: 1.3rem;">WHAT IS FINANCIAL STRESS?</h3>
+                    <p style="font-size: 0.95rem; font-weight: 400; margin-bottom: 1.5rem;">FINANCIAL STRESS HAPPENS WHEN STUDENTS FEEL WORRIED, OVERWHELMED, OR PRESSURED ABOUT MONEY.</p>
+                    <p style="font-style: italic; font-size: 0.85rem; margin-top: 1.5rem;">
+                        "FINANCIAL STRESS NEGATIVELY IMPACTS ACADEMIC FOCUS AND MENTAL WELL-BEING."<br>
+                        <span style="font-size: 0.8rem;">— NATIONAL UNIVERSITY MANILA STUDY, 2022</span>
+                    </p>
+                </div>
+                
+                <div class="nav-arrow fade-in" style="position: static; margin-top: 2rem;" onclick="window.scrollBy({top: window.innerHeight, behavior: 'smooth'})">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                        <polyline points="9 18 15 12 9 6"></polyline>
+                    </svg>
+                </div>
+
+                <div class="slide-in-right">
+                    <h1 class="section-title" style="text-align: right;">REDUCING<br>FINANCIAL STRESS</h1>
+                    <div class="yellow-banner" style="width: 100%;">WAYS TO REDUCE FINANCIAL STRESS</div>
+                </div>
+            </div>
+
+            <div class="content-box fade-in" style="margin-top: 2rem; padding: 3rem;">
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 3rem;">
+                    <div>
+                        <h3 style="color: #FFD700; font-family: 'Orbitron', sans-serif; font-size: 1.5rem; margin-bottom: 1.5rem;">CREATE A MONEY PLAN</h3>
+                        <p style="margin-bottom: 1rem;">KNOWING WHERE MONEY GOES REDUCES FEAR AND CONFUSION.</p>
+                        <p style="color: #888; font-size: 0.9rem;">TOOLS:</p>
+                        <ul style="color: #aaa; margin-left: 1.5rem;">
+                            <li>WEEKLY BUDGET SHEET</li>
+                            <li>EXPENSE LOG</li>
+                            <li>₱100/WEEK SAVINGS CHALLENGE</li>
+                        </ul>
+
+                        <h3 style="color: #FFD700; font-family: 'Orbitron', sans-serif; font-size: 1.5rem; margin: 2rem 0 1rem;">BUILD AN EMERGENCY FUND</h3>
+                        <p style="margin-bottom: 0.5rem;">START SMALL – ₱20-₱100 PER WEEK MATTERS.</p>
+                        <p style="color: #888;">GOAL: ₱1,000 STARTER EMERGENCY FUND</p>
+                    </div>
+
+                    <div>
+                        <h3 style="color: #FFD700; font-family: 'Orbitron', sans-serif; font-size: 1.5rem; margin-bottom: 1.5rem;">AVOID STRESS BORROWING</h3>
+                        <p style="margin-bottom: 1rem;">REPLACE:</p>
+                        <p style="color: #888;">✗ "UTANG MUNA"</p>
+                        <p style="color: #aaa; margin-bottom: 2rem;">✓ "DELAY PURCHASE / FIND CHEAPER OPTION"</p>
+
+                        <h3 style="color: #FFD700; font-family: 'Orbitron', sans-serif; font-size: 1.5rem; margin-bottom: 1rem;">PRACTICE STRESS-RELIEF HABITS</h3>
+                        <ul style="color: #aaa; margin-left: 1.5rem;">
+                            <li>10-MINUTE DEEP BREATHING</li>
+                            <li>JOURNALING FINANCIAL FEELINGS</li>
+                            <li>CAMPUS PEER SUPPORT / GROUP STUDY SPACES</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="quote-box fade-in">
+                <p>"YOU ARE NOT BEHIND – YOU ARE BUILDING YOUR FUTURE AT YOUR OWN PACE."</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Improving Monthly Income -->
+    <section id="income">
+        <div style="max-width: 1400px; width: 100%;">
+            <div style="display: grid; grid-template-columns: 1fr 1.5fr; gap: 3rem; align-items: start;">
+                <div class="slide-in-left" style="display: flex; flex-direction: column; gap: 2rem;">
+                    <div class="circular-image">
+                        <div class="circular-frame">
+                            <div class="segment top"></div>
+                            <div class="segment bottom"></div>
+                            <div class="segment left"></div>
+                            <div class="segment right"></div>
+                            <div class="image-content" style="background-image: url('image6.jpeg');"></div>
+                        </div>
+                    </div>
+                    <h1 class="section-title">IMPROVING<br>MONTHLY<br>INCOME</h1>
+                </div>
+
+                <div class="slide-in-right">
+                    <div class="yellow-banner" style="width: 100%; text-align: center; margin-bottom: 2rem; padding: 1.5rem;">
+                        WORKING STUDENTS FACE THE CHALLENGE OF BALANCING STUDIES AND INCOME GENERATION. THIS SECTION HELPS MAXIMIZE EARNINGS WITHOUT SACRIFICING ACADEMIC PERFORMANCE.
+                    </div>
+
+                    <div class="content-box" style="margin-bottom: 2rem;">
+                        <h3 style="color: #FFD700; font-family: 'Orbitron', sans-serif; text-align: center; margin-bottom: 1.5rem;">REALISTIC INCOME OPPORTUNITIES</h3>
+                        <table style="width: 100%; border-collapse: collapse;">
+                            <tr style="background: rgba(255,215,0,0.1);">
+                                <th style="padding: 1rem; text-align: left; color: #FFD700; border-bottom: 1px solid rgba(255,215,0,0.3);">CATEGORY</th>
+                                <th style="padding: 1rem; text-align: left; color: #FFD700; border-bottom: 1px solid rgba(255,215,0,0.3);">EXAMPLES</th>
+                                <th style="padding: 1rem; text-align: left; color: #FFD700; border-bottom: 1px solid rgba(255,215,0,0.3);">PLATFORMS</th>
+                            </tr>
+                            <tr style="border-bottom: 1px solid rgba(255,215,0,0.1);">
+                                <td style="padding: 1rem; color: #FFD700; font-weight: 700;">FREELANCING</td>
+                                <td style="padding: 1rem;">WRITING, VIRTUAL ASSISTANT, DESIGN</td>
+                                <td style="padding: 1rem;">FIVERR, UPWORK, ONLINEJOBS.PH</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid rgba(255,215,0,0.1);">
+                                <td style="padding: 1rem; color: #FFD700; font-weight: 700;">TUTORING</td>
+                                <td style="padding: 1rem;">ENGLISH, MATH, OR BUSINESS</td>
+                                <td style="padding: 1rem;">PREPLY, 51TALK</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid rgba(255,215,0,0.1);">
+                                <td style="padding: 1rem; color: #FFD700; font-weight: 700;">ONLINE SELLING</td>
+                                <td style="padding: 1rem;">RESELL CLOTHES, FOOD, STATIONERY</td>
+                                <td style="padding: 1rem;">SHOPEE, TIKTOK SHOP</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid rgba(255,215,0,0.1);">
+                                <td style="padding: 1rem; color: #FFD700; font-weight: 700;">SERVICE-BASED JOBS</td>
+                                <td style="padding: 1rem;">LAUNDRY, FOOD DELIVERY, PRINTING</td>
+                                <td style="padding: 1rem;">CAMPUS/LOCAL COMMUNITY</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 1rem; color: #FFD700; font-weight: 700;">DIGITAL CONTENT CREATION</td>
+                                <td style="padding: 1rem;">TIKTOK, YOUTUBE MICRO-TUTORIALS</td>
+                                <td style="padding: 1rem;">MONETIZE VIEWS AND SPONSORSHIPS</td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
+                        <div class="content-box">
+                            <h3 style="color: #FFD700; font-family: 'Orbitron', sans-serif; margin-bottom: 1rem; text-align: center;">WAYS TO INCREASE INCOME</h3>
+                            <ul style="list-style: none; padding: 0;">
+                                <li style="margin-bottom: 0.8rem;">• TAKE MICRO-COURSES (TESDA / COURSERA) TO UPSKILL.</li>
+                                <li style="margin-bottom: 0.8rem;">• USE YOUR TALENT OR HOBBY (MUSIC, ART, TUTORING) AS A SOURCE OF INCOME.</li>
+                                <li style="margin-bottom: 0.8rem;">• OFFER PEER SERVICES (E.G., NOTE SUMMARIZING, POWERPOINT CREATION).</li>
+                                <li>• SAVE A PORTION OF EVERY PAYCHECK (EVEN ₱100/MONTH) FOR FUTURE VENTURES.</li>
+                            </ul>
+                        </div>
+
+                        <div class="content-box">
+                            <h3 style="color: #FFD700; font-family: 'Orbitron', sans-serif; margin-bottom: 1rem; text-align: center;">TOOLS & RESOURCES</h3>
+                            <ul style="list-style: none; padding: 0;">
+                                <li style="margin-bottom: 0.8rem;">• INCOME GOAL TRACKER – SET A TARGET (E.G., ₱1,000/WEEK)</li>
+                                <li style="margin-bottom: 0.8rem;">• BUDGET & EXPENSE LOG – MONITOR WHERE MONEY GOES</li>
+                                <li>• SKILL INVENTORY FORM – IDENTIFY PROFITABLE ABILITIES</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="quote-box" style="margin-top: 2rem;">
+                        <p>"DON'T WAIT FOR THE RIGHT OPPORTUNITY – CREATE IT WITH YOUR SKILLS."</p>
+                        <p class="author">— DIGITAL PINOY CAREERS, 2022</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Enhancing PSES -->
+    <section id="pses">
+        <div style="max-width: 1400px; width: 100%;">
+            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 2rem; align-items: center; margin-bottom: 3rem;">
+                <div class="yellow-banner fade-in" style="padding: 2rem; height: fit-content;">
+                    <h3 style="margin-bottom: 1rem; font-size: 1.1rem;">AFFIRMATIONS FOR CONFIDENCE</h3>
+                    <div style="font-size: 0.85rem; font-weight: 400; color: #000; line-height: 1.6;">
+                        <p style="margin-bottom: 0.8rem; font-style: italic;">"I AM CAPABLE OF IMPROVING MY FINANCIAL LIFE."</p>
+                        <p style="margin-bottom: 0.8rem; font-style: italic;">"EVERY SMALL STEP I TAKE STRENGTHENS MY STABILITY."</p>
+                        <p style="font-style: italic;">"I AM MORE THAN MY INCOME – I AM MY PROGRESS."</p>
+                    </div>
+                </div>
+
+                <div class="fade-in" style="display: flex; justify-content: center;">
+                    <div class="circular-image" style="width: 350px; height: 350px;">
+                        <div class="circular-frame">
+                            <div class="segment top"></div>
+                            <div class="segment bottom"></div>
+                            <div class="segment left"></div>
+                            <div class="segment right"></div>
+                            <div class="image-content" style="background-image: url('image7.jpeg');"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="slide-in-right" style="display: flex; flex-direction: column; justify-content: center; text-align: right;">
+                    <h1 class="section-title" style="margin-bottom: 1.5rem;">ENHANCING<br>PERCEIVED<br>SOCIO-<br>ECONOMIC<br>STATUS</h1>
+                    <div class="content-box">
+                        <p style="font-size: 0.9rem;">YOUR PERCEIVED SOCIO-ECONOMIC STATUS ISN'T JUST ABOUT INCOME – IT'S HOW YOU SEE YOURSELF FINANCIALLY RELATIVE TO OTHERS AND HOW CONFIDENT YOU ARE IN IMPROVING THAT POSITION.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Building Better Financial Behavior -->
+    <section id="behavior">
+        <div style="max-width: 1400px; width: 100%;">
+            <h1 class="section-title fade-in">BUILDING BETTER<br>FINANCIAL BEHAVIOR</h1>
+            
+            <div class="yellow-banner fade-in" style="width: 100%; margin: 2rem 0; text-align: center;">
+                FINANCIAL SUCCESS BEGINS WITH BEHAVIOR – HABITS THAT SHAPE HOW WE HANDLE INCOME AND EXPENSES.
+            </div>
+
+            <div class="content-box fade-in" style="margin-bottom: 2rem;">
+                <h3 style="color: #FFD700; font-family: 'Orbitron', sans-serif; text-align: center; margin-bottom: 1.5rem;">SMART MONEY HABITS</h3>
+                <table style="width: 100%; border-collapse: collapse;">
+                    <tr style="border-bottom: 2px solid rgba(255,215,0,0.3);">
+                        <th style="padding: 1rem; text-align: left; color: #FFD700;">HABIT</th>
+                        <th style="padding: 1rem; text-align: left; color: #FFD700;">DESCRIPTION</th>
+                    </tr>
+                    <tr style="border-bottom: 1px solid rgba(255,215,0,0.1);">
+                        <td style="padding: 1rem;">BUDGETING</td>
+                        <td style="padding: 1rem;">RECORD EXPENSES TO TRACK SPENDING PATTERNS.</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid rgba(255,215,0,0.1);">
+                        <td style="padding: 1rem;">SAVING BEFORE SPENDING</td>
+                        <td style="padding: 1rem;">SET ASIDE 10% IMMEDIATELY AFTER EARNING.</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid rgba(255,215,0,0.1);">
+                        <td style="padding: 1rem;">AVOID IMPULSE BUYING</td>
+                        <td style="padding: 1rem;">WAIT 24 HOURS BEFORE MAKING NON-ESSENTIAL PURCHASES.</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid rgba(255,215,0,0.1);">
+                        <td style="padding: 1rem;">DEBT MANAGEMENT</td>
+                        <td style="padding: 1rem;">PAY DEBTS WITH HIGHEST INTEREST FIRST.</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 1rem;">FINANCIAL JOURNALING</td>
+                        <td style="padding: 1rem;">REFLECT ON SPENDING BEHAVIOR WEEKLY.</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-bottom: 2rem;">
+                <div class="content-box fade-in">
+                    <h3 style="color: #FFD700; font-family: 'Orbitron', sans-serif; margin-bottom: 1rem; text-align: center;">THE 50-30-20 RULE</h3>
+                    <ul style="list-style: none; padding: 0;">
+                        <li style="margin-bottom: 0.8rem;">• 50% NEEDS – FOOD, RENT, TUITION</li>
+                        <li style="margin-bottom: 0.8rem;">• 30% WANTS – LEISURE, CLOTHES</li>
+                        <li>• 20% SAVINGS – EMERGENCY FUND OR FUTURE INVESTMENT</li>
+                    </ul>
+                </div>
+
+                <div class="content-box fade-in">
+                    <h3 style="color: #FFD700; font-family: 'Orbitron', sans-serif; margin-bottom: 1rem; text-align: center;">DOWNLOADABLE TOOLS</h3>
+                    <ul style="list-style: none; padding: 0;">
+                        <li style="margin-bottom: 0.8rem;">• [MONTHLY BUDGET PLANNER TEMPLATE]</li>
+                        <li style="margin-bottom: 0.8rem;">• [EXPENSE TRACKER SHEET]</li>
+                        <li>• [FINANCIAL REFLECTION WORKSHEET]</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="quote-box fade-in">
+                <p>"FINANCIAL STABILITY IS BUILT ON SMALL, CONSISTENT CHOICES – NOT ONE-TIME LUCK."</p>
+                <p class="author">— BSP BEMONEYSMART CAMPAIGN, 2023</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Support -->
+    <section id="support" class="footer-section">
+        <h2 class="fade-in">SUPPORT</h2>
+        <p style="margin-bottom: 2rem;" class="fade-in">EXTERNAL RESOURCES</p>
+        
+        <div class="content-box fade-in" style="max-width: 800px; margin: 0 auto 3rem;">
+            <div class="footer-links">
+                <a href="https://e-tesda.gov.ph/" target="_blank">TESDA Online Courses</a>
+                <a href="https://www.investopedia.com/" target="_blank">Investopedia – Financial Literacy Basics</a>
+                <a href="https://www.bsp.gov.ph/SitePages/InclusiveFinance/LearningResources.aspx" target="_blank">Bangko Sentral ng Pilipinas: BeMoneySmart</a>
+            </div>
+        </div>
+
+        <div class="fade-in" style="border-top: 1px solid rgba(255,215,0,0.2); padding-top: 2rem;">
+            <p style="font-size: 0.9rem; margin-bottom: 0.5rem;">BATANGAS STATE UNIVERSITY – THE NATIONAL ENGINEERING UNIVERSITY (PB MAIN 1)</p>
+            <p style="font-size: 0.9rem; margin-bottom: 0.5rem;">BSBA FINANCIAL MANAGEMENT DEPARTMENT</p>
+            <p style="font-size: 0.85rem; margin: 1rem 0;">EFFECTS OF FINANCIAL LITERACY, FINANCIAL STRESS ON FINANCIAL WELL-BEING WITH FINANCIAL BEHAVIOR AS MEDIATOR AMONG WORKING STUDENTS AT BATANGAS STATE UNIVERSITY-TNEU PB MAIN 1</p>
+            <p style="font-size: 0.9rem; margin-bottom: 0.5rem;">PAULA MAGTIBAY, TYRONE NISPEROS, JAIRA REYNERA</p>
+            <p style="font-size: 0.85rem; color: #666;">© 2025 EMPOWERFIN | DESIGNED BY BSBA-FM RESEARCHERS</p>
+        </div>
+    </section>
+
+    <div class="nav-arrow" onclick="window.scrollBy({top: window.innerHeight, behavior: 'smooth'})">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+            <polyline points="6 9 12 15 18 9"></polyline>
+        </svg>
+    </div>
+
+    <script>
+        // Dropdown Toggle on Click
+        const dropdownToggle = document.querySelector('.dropdown > a');
+        const dropdownContent = document.querySelector('.dropdown-content');
+
+        dropdownToggle.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            dropdownContent.classList.toggle('show');
+        });
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.dropdown')) {
+                dropdownContent.classList.remove('show');
+            }
+        });
+
+        // Close dropdown when clicking on a dropdown item
+        document.querySelectorAll('.dropdown-content a').forEach(link => {
+            link.addEventListener('click', () => {
+                dropdownContent.classList.remove('show');
+            });
+        });
+
+        // Close dropdown on scroll
+        window.addEventListener('scroll', () => {
+            dropdownContent.classList.remove('show');
+        });
+
+        // Scroll Animation Observer Animation Observer
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in, .slide-in-left, .slide-in-right').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Active Navigation on Scroll
+        const sections = document.querySelectorAll('section[id]');
+        const navLinks = document.querySelectorAll('.nav-link');
+
+        window.addEventListener('scroll', () => {
+            let current = '';
+            const scrollPosition = window.pageYOffset;
+            const windowHeight = window.innerHeight;
+            const documentHeight = document.documentElement.scrollHeight;
+            
+            // Check if at bottom of page
+            if (scrollPosition + windowHeight >= documentHeight - 100) {
+                current = 'support';
+            } else {
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop;
+                    const sectionHeight = section.clientHeight;
+                    if (scrollPosition >= (sectionTop - 300)) {
+                        current = section.getAttribute('id');
+                    }
+                });
+            }
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === `#${current}`) {
+                    link.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
