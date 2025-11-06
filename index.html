@@ -80,6 +80,7 @@
             font-size: 1.3rem;
             font-weight: 700;
             letter-spacing: 2px;
+            z-index: 1002;
         }
 
         .logo-icon {
@@ -123,6 +124,36 @@
             width: 100%;
             height: 2px;
             background: #FFD700;
+        }
+
+        /* Mobile Menu Toggle */
+        .mobile-menu-toggle {
+            display: none;
+            flex-direction: column;
+            gap: 6px;
+            cursor: pointer;
+            z-index: 1002;
+            padding: 10px;
+        }
+
+        .mobile-menu-toggle span {
+            width: 30px;
+            height: 3px;
+            background: #FFD700;
+            transition: all 0.3s ease;
+            border-radius: 3px;
+        }
+
+        .mobile-menu-toggle.active span:nth-child(1) {
+            transform: rotate(45deg) translate(8px, 8px);
+        }
+
+        .mobile-menu-toggle.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .mobile-menu-toggle.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(8px, -8px);
         }
 
         .plus-btn {
@@ -521,8 +552,83 @@
                 padding: 1rem 2rem;
             }
 
+            .mobile-menu-toggle {
+                display: flex;
+            }
+
+            .nav-links {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                height: 100vh;
+                width: 80%;
+                max-width: 400px;
+                background: rgba(0, 0, 0, 0.98);
+                flex-direction: column;
+                justify-content: center;
+                gap: 2rem;
+                padding: 2rem;
+                transition: right 0.3s ease;
+                border-left: 1px solid rgba(255, 215, 0, 0.3);
+            }
+
+            .nav-links.active {
+                right: 0;
+            }
+
+            .nav-links a {
+                font-size: 1.2rem;
+                padding: 1rem;
+                width: 100%;
+                text-align: center;
+            }
+
+            .dropdown {
+                width: 100%;
+            }
+
+            .dropdown-content {
+                position: static;
+                margin-top: 1rem;
+                border-radius: 10px;
+                background: rgba(255, 215, 0, 0.05);
+            }
+
+            .plus-btn {
+                margin-top: 1rem;
+            }
+
             section {
                 padding: 5rem 2rem 2rem;
+            }
+
+            .understanding-grid,
+            .concepts-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .logo {
+                font-size: 1rem;
+            }
+
+            .logo-icon {
+                width: 28px;
+                height: 28px;
+            }
+
+            .hero-title {
+                font-size: 2rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .nav-links {
+                width: 100%;
+                max-width: 100%;
             }
         }
     </style>
@@ -579,7 +685,7 @@
                     <div class="segment bottom"></div>
                     <div class="segment left"></div>
                     <div class="segment right"></div>
-                    <div class="image-content" style="background-image: url('image3.jpeg');"></div>
+                    <div class="image-content" style="background-image: url('https://images.unsplash.com/photo-1621761191319-c6fb62004040?w=500&h=500&fit=crop');"></div>
                 </div>
             </div>
             <div class="slide-in-right">
@@ -629,7 +735,7 @@
                     <div class="segment bottom"></div>
                     <div class="segment left"></div>
                     <div class="segment right"></div>
-                    <div class="image-content" style="background-image: url('image4.jpeg');"></div>
+                    <div class="image-content" style="background-image: url('https://images.unsplash.com/photo-1559526324-593bc073d938?w=500&h=500&fit=crop');"></div>
                 </div>
             </div>
         </div>
@@ -685,7 +791,7 @@
                         <div class="segment bottom"></div>
                         <div class="segment left"></div>
                         <div class="segment right"></div>
-                        <div class="image-content" style="background-image: url('image5.jpeg');"></div>
+                        <div class="image-content" style="background-image: url('https://images.unsplash.com/photo-1579621970563-ebec7560ff3e?w=500&h=500&fit=crop');"></div>
                     </div>
                 </div>
                 <h2 class="side-title">UNDERSTANDING<br>FINANCIAL<br>WELL-BEING</h2>
@@ -853,7 +959,7 @@
                             <div class="segment bottom"></div>
                             <div class="segment left"></div>
                             <div class="segment right"></div>
-                            <div class="image-content" style="background-image: url('image6.jpeg');"></div>
+                            <div class="image-content" style="background-image: url('https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=500&h=500&fit=crop');"></div>
                         </div>
                     </div>
                     <h1 class="section-title">IMPROVING<br>MONTHLY<br>INCOME</h1>
@@ -950,7 +1056,7 @@
                             <div class="segment bottom"></div>
                             <div class="segment left"></div>
                             <div class="segment right"></div>
-                            <div class="image-content" style="background-image: url('image7.jpeg');"></div>
+                            <div class="image-content" style="background-image: url('https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=350&h=350&fit=crop');"></div>
                         </div>
                     </div>
                 </div>
