@@ -602,9 +602,18 @@
                 padding: 5rem 2rem 2rem;
             }
 
-            .understanding-grid,
-            .concepts-grid {
-                grid-template-columns: 1fr;
+            /* Make all grid layouts single column on tablets */
+            #literacy > div > div:first-child,
+            #stress > div > div:first-child > div,
+            #behavior > div > div {
+                grid-template-columns: 1fr !important;
+            }
+
+            /* Adjust table containers */
+            .content-box table {
+                display: block;
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
             }
         }
 
@@ -626,9 +635,83 @@
                 font-size: 2rem;
             }
 
+            .side-title {
+                text-align: center;
+            }
+
             .nav-links {
                 width: 100%;
                 max-width: 100%;
+            }
+
+            .circular-image {
+                width: 280px;
+                height: 280px;
+            }
+
+            /* Stack all content vertically on mobile */
+            #understanding > div,
+            #stress > div,
+            #income > div > div,
+            #pses > div > div,
+            #behavior > div > div {
+                grid-template-columns: 1fr !important;
+                gap: 1.5rem;
+            }
+
+            /* Make tables responsive */
+            table {
+                font-size: 0.85rem;
+            }
+
+            table th,
+            table td {
+                padding: 0.5rem !important;
+                display: block;
+                text-align: left !important;
+            }
+
+            table tr {
+                display: block;
+                margin-bottom: 1rem;
+                border: 1px solid rgba(255, 215, 0, 0.2);
+                border-radius: 8px;
+                padding: 0.5rem;
+            }
+
+            table thead {
+                display: none;
+            }
+
+            table td::before {
+                content: attr(data-label);
+                font-weight: 700;
+                color: #FFD700;
+                display: block;
+                margin-bottom: 0.3rem;
+            }
+
+            /* Adjust yellow banners */
+            .yellow-banner {
+                font-size: 1rem;
+                padding: 1rem 1.5rem;
+            }
+
+            /* Fix PSES section 3-column grid */
+            #pses > div > div:first-child {
+                grid-template-columns: 1fr !important;
+            }
+
+            .nav-arrow {
+                width: 50px;
+                height: 50px;
+                bottom: 1.5rem;
+                right: 1.5rem;
+            }
+
+            .nav-arrow svg {
+                width: 20px;
+                height: 20px;
             }
         }
     </style>
@@ -642,6 +725,13 @@
             </svg>
             <span>EMPOWERFIN</span>
         </div>
+
+        <div class="mobile-menu-toggle">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+
         <div class="nav-links">
             <a href="#hero" class="nav-link">Company</a>
             <div class="dropdown">
@@ -831,24 +921,24 @@
                             <th style="padding: 1rem; text-align: left; color: #000; font-weight: 700;">MEANING</th>
                         </tr>
                         <tr style="border-bottom: 1px solid rgba(0,0,0,0.2);">
-                            <td style="padding: 1rem; color: #000; font-style: italic;">BUDGETING</td>
-                            <td style="padding: 1rem; color: #000;">PLANNING WHERE YOUR MONEY GOES</td>
+                            <td style="padding: 1rem; color: #000; font-style: italic;" data-label="SKILLS">BUDGETING</td>
+                            <td style="padding: 1rem; color: #000;" data-label="MEANING">PLANNING WHERE YOUR MONEY GOES</td>
                         </tr>
                         <tr style="border-bottom: 1px solid rgba(0,0,0,0.2);">
-                            <td style="padding: 1rem; color: #000; font-style: italic;">RESPONSIBLE SPENDING</td>
-                            <td style="padding: 1rem; color: #000;">BUYING NEEDS FIRST BEFORE WANTS</td>
+                            <td style="padding: 1rem; color: #000; font-style: italic;" data-label="SKILLS">RESPONSIBLE SPENDING</td>
+                            <td style="padding: 1rem; color: #000;" data-label="MEANING">BUYING NEEDS FIRST BEFORE WANTS</td>
                         </tr>
                         <tr style="border-bottom: 1px solid rgba(0,0,0,0.2);">
-                            <td style="padding: 1rem; color: #000; font-style: italic;">SAVING</td>
-                            <td style="padding: 1rem; color: #000;">KEEPING MONEY FOR EMERGENCIES & GOALS</td>
+                            <td style="padding: 1rem; color: #000; font-style: italic;" data-label="SKILLS">SAVING</td>
+                            <td style="padding: 1rem; color: #000;" data-label="MEANING">KEEPING MONEY FOR EMERGENCIES & GOALS</td>
                         </tr>
                         <tr style="border-bottom: 1px solid rgba(0,0,0,0.2);">
-                            <td style="padding: 1rem; color: #000; font-style: italic;">INVESTING BASICS</td>
-                            <td style="padding: 1rem; color: #000;">LEARNING HOW MONEY GROWS</td>
+                            <td style="padding: 1rem; color: #000; font-style: italic;" data-label="SKILLS">INVESTING BASICS</td>
+                            <td style="padding: 1rem; color: #000;" data-label="MEANING">LEARNING HOW MONEY GROWS</td>
                         </tr>
                         <tr>
-                            <td style="padding: 1rem; color: #000; font-style: italic;">MONEY PLANNING</td>
-                            <td style="padding: 1rem; color: #000;">SETTING SHORT & LONG-TERM FINANCIAL GOALS</td>
+                            <td style="padding: 1rem; color: #000; font-style: italic;" data-label="SKILLS">MONEY PLANNING</td>
+                            <td style="padding: 1rem; color: #000;" data-label="MEANING">SETTING SHORT & LONG-TERM FINANCIAL GOALS</td>
                         </tr>
                     </table>
                 </div>
@@ -979,29 +1069,29 @@
                                 <th style="padding: 1rem; text-align: left; color: #FFD700; border-bottom: 1px solid rgba(255,215,0,0.3);">PLATFORMS</th>
                             </tr>
                             <tr style="border-bottom: 1px solid rgba(255,215,0,0.1);">
-                                <td style="padding: 1rem; color: #FFD700; font-weight: 700;">FREELANCING</td>
-                                <td style="padding: 1rem;">WRITING, VIRTUAL ASSISTANT, DESIGN</td>
-                                <td style="padding: 1rem;">FIVERR, UPWORK, ONLINEJOBS.PH</td>
+                                <td style="padding: 1rem; color: #FFD700; font-weight: 700;" data-label="CATEGORY">FREELANCING</td>
+                                <td style="padding: 1rem;" data-label="EXAMPLES">WRITING, VIRTUAL ASSISTANT, DESIGN</td>
+                                <td style="padding: 1rem;" data-label="PLATFORMS">FIVERR, UPWORK, ONLINEJOBS.PH</td>
                             </tr>
                             <tr style="border-bottom: 1px solid rgba(255,215,0,0.1);">
-                                <td style="padding: 1rem; color: #FFD700; font-weight: 700;">TUTORING</td>
-                                <td style="padding: 1rem;">ENGLISH, MATH, OR BUSINESS</td>
-                                <td style="padding: 1rem;">PREPLY, 51TALK</td>
+                                <td style="padding: 1rem; color: #FFD700; font-weight: 700;" data-label="CATEGORY">TUTORING</td>
+                                <td style="padding: 1rem;" data-label="EXAMPLES">ENGLISH, MATH, OR BUSINESS</td>
+                                <td style="padding: 1rem;" data-label="PLATFORMS">PREPLY, 51TALK</td>
                             </tr>
                             <tr style="border-bottom: 1px solid rgba(255,215,0,0.1);">
-                                <td style="padding: 1rem; color: #FFD700; font-weight: 700;">ONLINE SELLING</td>
-                                <td style="padding: 1rem;">RESELL CLOTHES, FOOD, STATIONERY</td>
-                                <td style="padding: 1rem;">SHOPEE, TIKTOK SHOP</td>
+                                <td style="padding: 1rem; color: #FFD700; font-weight: 700;" data-label="CATEGORY">ONLINE SELLING</td>
+                                <td style="padding: 1rem;" data-label="EXAMPLES">RESELL CLOTHES, FOOD, STATIONERY</td>
+                                <td style="padding: 1rem;" data-label="PLATFORMS">SHOPEE, TIKTOK SHOP</td>
                             </tr>
                             <tr style="border-bottom: 1px solid rgba(255,215,0,0.1);">
-                                <td style="padding: 1rem; color: #FFD700; font-weight: 700;">SERVICE-BASED JOBS</td>
-                                <td style="padding: 1rem;">LAUNDRY, FOOD DELIVERY, PRINTING</td>
-                                <td style="padding: 1rem;">CAMPUS/LOCAL COMMUNITY</td>
+                                <td style="padding: 1rem; color: #FFD700; font-weight: 700;" data-label="CATEGORY">SERVICE-BASED JOBS</td>
+                                <td style="padding: 1rem;" data-label="EXAMPLES">LAUNDRY, FOOD DELIVERY, PRINTING</td>
+                                <td style="padding: 1rem;" data-label="PLATFORMS">CAMPUS/LOCAL COMMUNITY</td>
                             </tr>
                             <tr>
-                                <td style="padding: 1rem; color: #FFD700; font-weight: 700;">DIGITAL CONTENT CREATION</td>
-                                <td style="padding: 1rem;">TIKTOK, YOUTUBE MICRO-TUTORIALS</td>
-                                <td style="padding: 1rem;">MONETIZE VIEWS AND SPONSORSHIPS</td>
+                                <td style="padding: 1rem; color: #FFD700; font-weight: 700;" data-label="CATEGORY">DIGITAL CONTENT CREATION</td>
+                                <td style="padding: 1rem;" data-label="EXAMPLES">TIKTOK, YOUTUBE MICRO-TUTORIALS</td>
+                                <td style="padding: 1rem;" data-label="PLATFORMS">MONETIZE VIEWS AND SPONSORSHIPS</td>
                             </tr>
                         </table>
                     </div>
@@ -1088,24 +1178,24 @@
                         <th style="padding: 1rem; text-align: left; color: #FFD700;">DESCRIPTION</th>
                     </tr>
                     <tr style="border-bottom: 1px solid rgba(255,215,0,0.1);">
-                        <td style="padding: 1rem;">BUDGETING</td>
-                        <td style="padding: 1rem;">RECORD EXPENSES TO TRACK SPENDING PATTERNS.</td>
+                        <td style="padding: 1rem;" data-label="HABIT">BUDGETING</td>
+                        <td style="padding: 1rem;" data-label="DESCRIPTION">RECORD EXPENSES TO TRACK SPENDING PATTERNS.</td>
                     </tr>
                     <tr style="border-bottom: 1px solid rgba(255,215,0,0.1);">
-                        <td style="padding: 1rem;">SAVING BEFORE SPENDING</td>
-                        <td style="padding: 1rem;">SET ASIDE 10% IMMEDIATELY AFTER EARNING.</td>
+                        <td style="padding: 1rem;" data-label="HABIT">SAVING BEFORE SPENDING</td>
+                        <td style="padding: 1rem;" data-label="DESCRIPTION">SET ASIDE 10% IMMEDIATELY AFTER EARNING.</td>
                     </tr>
                     <tr style="border-bottom: 1px solid rgba(255,215,0,0.1);">
-                        <td style="padding: 1rem;">AVOID IMPULSE BUYING</td>
-                        <td style="padding: 1rem;">WAIT 24 HOURS BEFORE MAKING NON-ESSENTIAL PURCHASES.</td>
+                        <td style="padding: 1rem;" data-label="HABIT">AVOID IMPULSE BUYING</td>
+                        <td style="padding: 1rem;" data-label="DESCRIPTION">WAIT 24 HOURS BEFORE MAKING NON-ESSENTIAL PURCHASES.</td>
                     </tr>
                     <tr style="border-bottom: 1px solid rgba(255,215,0,0.1);">
-                        <td style="padding: 1rem;">DEBT MANAGEMENT</td>
-                        <td style="padding: 1rem;">PAY DEBTS WITH HIGHEST INTEREST FIRST.</td>
+                        <td style="padding: 1rem;" data-label="HABIT">DEBT MANAGEMENT</td>
+                        <td style="padding: 1rem;" data-label="DESCRIPTION">PAY DEBTS WITH HIGHEST INTEREST FIRST.</td>
                     </tr>
                     <tr>
-                        <td style="padding: 1rem;">FINANCIAL JOURNALING</td>
-                        <td style="padding: 1rem;">REFLECT ON SPENDING BEHAVIOR WEEKLY.</td>
+                        <td style="padding: 1rem;" data-label="HABIT">FINANCIAL JOURNALING</td>
+                        <td style="padding: 1rem;" data-label="DESCRIPTION">REFLECT ON SPENDING BEHAVIOR WEEKLY.</td>
                     </tr>
                 </table>
             </div>
@@ -1166,6 +1256,31 @@
     </div>
 
     <script>
+        // Mobile Menu Toggle
+        const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
+        const navLinksContainer = document.querySelector('.nav-links');
+
+        mobileMenuToggle.addEventListener('click', () => {
+            mobileMenuToggle.classList.toggle('active');
+            navLinksContainer.classList.toggle('active');
+        });
+
+        // Close mobile menu when clicking on a link
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenuToggle.classList.remove('active');
+                navLinksContainer.classList.remove('active');
+            });
+        });
+
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('nav')) {
+                mobileMenuToggle.classList.remove('active');
+                navLinksContainer.classList.remove('active');
+            }
+        });
+
         // Dropdown Toggle on Click
         const dropdownToggle = document.querySelector('.dropdown > a');
         const dropdownContent = document.querySelector('.dropdown-content');
@@ -1187,6 +1302,9 @@
         document.querySelectorAll('.dropdown-content a').forEach(link => {
             link.addEventListener('click', () => {
                 dropdownContent.classList.remove('show');
+                // Close mobile menu too
+                mobileMenuToggle.classList.remove('active');
+                navLinksContainer.classList.remove('active');
             });
         });
 
@@ -1195,7 +1313,7 @@
             dropdownContent.classList.remove('show');
         });
 
-        // Scroll Animation Observer Animation Observer
+        // Scroll Animation Observer
         const observerOptions = {
             threshold: 0.1,
             rootMargin: '0px 0px -100px 0px'
