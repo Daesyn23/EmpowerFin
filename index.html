@@ -237,6 +237,11 @@
             font-size: 0.9rem;
             border-bottom: 1px solid rgba(255, 215, 0, 0.1);
             text-decoration: none;
+            position: relative;
+        }
+
+        .dropdown-content a::after {
+            display: none !important;
         }
 
         .dropdown-content a:last-child {
@@ -580,6 +585,7 @@
                 padding: 1rem;
                 width: 100%;
                 text-align: center;
+                padding-bottom: 1rem;
             }
 
             .nav-links a.active::after {
@@ -587,7 +593,7 @@
             }
 
             .nav-links a::after {
-                display: none;
+                display: none !important;
             }
 
             .dropdown {
@@ -600,7 +606,11 @@
             .dropdown > a {
                 width: 100%;
                 text-align: center;
-                border-bottom: none;
+                border-bottom: none !important;
+            }
+
+            .dropdown-content a::after {
+                display: none !important;
             }
 
             .dropdown-content {
@@ -683,6 +693,37 @@
             /* Hide the arrow on mobile in stress section */
             #stress .nav-arrow[style*="position: static"] {
                 display: none;
+            }
+
+            /* Fix stress section content box overflow */
+            #stress .content-box {
+                padding: 1.5rem 1rem;
+                overflow: hidden;
+            }
+
+            #stress .content-box > div {
+                grid-template-columns: 1fr !important;
+                gap: 2rem;
+            }
+
+            #stress .content-box h3 {
+                font-size: 1.1rem;
+                margin-bottom: 1rem;
+            }
+
+            #stress .content-box p {
+                font-size: 0.85rem;
+                line-height: 1.6;
+                margin-bottom: 0.8rem;
+            }
+
+            #stress .content-box ul {
+                margin-left: 1.2rem;
+            }
+
+            #stress .content-box ul li {
+                font-size: 0.85rem;
+                margin-bottom: 0.5rem;
             }
 
             table {
@@ -772,9 +813,21 @@
                 font-size: 0.9rem;
             }
 
+            .content-box h3 {
+                font-size: 1rem;
+                margin-bottom: 1rem;
+                word-wrap: break-word;
+            }
+
+            .content-box p,
             .content-box ul li {
                 font-size: 0.85rem;
                 line-height: 1.6;
+                word-wrap: break-word;
+            }
+
+            .content-box ul {
+                margin-left: 1rem;
             }
 
             .footer-section {
@@ -890,13 +943,18 @@
             }
 
             .content-box h3 {
-                font-size: 1rem;
+                font-size: 0.9rem;
                 margin-bottom: 0.8rem;
             }
 
             .content-box p,
             .content-box ul li {
-                font-size: 0.8rem;
+                font-size: 0.75rem;
+                line-height: 1.5;
+            }
+
+            .content-box ul {
+                margin-left: 0.8rem;
             }
 
             .nav-arrow {
